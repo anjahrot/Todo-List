@@ -22,6 +22,7 @@
     font-family: 'roboto', Arial, Helvetica, sans-serif;
 }
 
+/* Header */
 .header {
     grid-area: header;
     background-color: var(--bg-color-text);
@@ -40,24 +41,100 @@
     fill: var(--bg-color-sidebar);
 }
 
+/* Sidebar */
 .sidebar {
     background-color: var(--bg-color-sidebar);
+    color: var(--bg-color-text);
+    padding: 20px;
 }
 
+.sidebar .heading {
+    display: flex;
+    gap: 15px;
+}
+
+/* Sidebar buttons */
+.sidebar button {
+    background-color: var(--bg-color-sidebar);
+    color: var(--bg-color-text);
+    font-size: var(--text-size);
+    border-style: none;
+    cursor: pointer;
+}
+
+.sidebar .newProject {
+    border-radius: 50%;    
+}
+
+.sidebar .projectItems {
+    border: 1px solid var(--bg-color-text);
+    padding: 5px 15px;
+    border-radius: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.sidebar .heading svg {
+    fill: var(--bg-color-text);
+    width: var(--heading-fs);
+    height: auto;
+}
+
+.sidebar .projectItems svg {
+    fill: var(--bg-color-text);
+    width: 20px;
+    height: auto;
+}
+
+/* sidebar list */
+.sidebar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 10px;
+}
+
+.sidebar li:first-of-type {
+    padding-top: 15px;
+}
+
+/* main content - elements added dynamically in javascript*/
 .content {
+    padding: 20px;
     background-color: var(--bg-color-main);
+    color: black;
 }
 
+.content .addTodo {
+    background-color: var(--bg-color-main);
+    border-style: none;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.content .icon {
+    width: 25px;
+    height: auto;
+}
+
+.init-container {
+    display: flex;
+    gap: 15px;
+}
+
+/* footer */
 .footer {
     grid-area: footer;
     background-color: blueviolet;
     padding: 20px;
-    color: var(--bg-color-sidebar);
+    color: var(--bg-color-text);
     font-size: var(--text-size);
 }
 
 .footer a {
     text-decoration: none;
-    color: var(--bg-color-sidebar);
+    color: var(--bg-color-text);
 }
 
