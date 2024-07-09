@@ -13,6 +13,8 @@ function init() {
     const myIcon = new Image();
     myIcon.src = AddIcon;
     myIcon.classList.add('icon');
+    myIcon.classList.add('modal-open');
+    myIcon.setAttribute('data-id','todo-modal');
     button.appendChild(myIcon);
 
     container.appendChild(headline);

@@ -10,6 +10,64 @@
     <title>Todo List</title>
 </head>
 <body>
+    <!-- Form popup modals to add project and todo -->
+    <div id="project-modal" class="modal" role="dialog" tabindex="-1">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h3>New Project</h3>
+                <button class="modal-close" data-id="project-modal" aria-label="Close">
+                    &times;
+                </button>
+            </div>
+            <form action="/project-form-page" method="post">
+                <ul>
+                    <li>
+                        <label for="title">Project title</label>
+                        <input type="text" id="title" name="project_title" required>
+                    </li>
+                    <li>
+                        <label for="description">Project description</label>
+                        <input type="text" id="description" name="project_description">
+                    </li>
+                    <li>
+                        <label for="notes">Notes:</label>
+                        <input type="text" id="notes" name="notes">
+                    </li>
+                </ul>
+                <button class="submit_button" type="submit">Add Project</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="todo-modal" class="modal" role="dialog" tabindex="-1">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <h3>New Todo</h3>
+                <button class="modal-close" data-id="todo-modal" aria-label="Close">
+                    &times;
+                </button>
+            </div>
+            <form action="/todo-form-page" method="post">
+                <ul>
+                    <li>
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="project_title" required>
+                    </li>
+                    <li>
+                        <label for="dueDate">Due Date</label>
+                        <input type="text" id="dueDate" name="dueDate">
+                    </li>
+                    <!-- Nedtrekksliste eller radiobuttons for priority -->
+                    <li>
+                        <label for="notes">Notes:</label>
+                        <input type="text" id="notes" name="notes">
+                    </li>
+                </ul>
+                <button class="submit_button" type="submit">Add Todo</button>
+            </form>
+        </div>
+    </div>
+    <!-- Regular content of page -->
     <div class="container">
         <div class="header">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M7 7H9V9H7V7M7 11H9V13H7V11M7 15H9V17H7V15M17 17H11V15H17V17M17 13H11V11H17V13M17 9H11V7H17V9Z" /></svg>
@@ -18,8 +76,8 @@
         <div class="sidebar">
             <div class="heading">
                 <h2>My Projects</h2>
-                <button class="newProject">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>
+                <button class="modal-open" data-id="project-modal">
+                    <img class="modal-open" data-id="project-modal" id='plus_img' src='../src/icons/plus-circle.svg'>
                 </button>
             </div>
             <ul class="projectList">
