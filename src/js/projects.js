@@ -22,3 +22,21 @@ export default class Project {
     }
 
 }
+
+function newProjectFromFormInput (event) {
+    event.preventDefault();
+
+    const data = new FormData(formElem);
+    let title = data.get("project_title");
+    let description = data.get("project_description");
+    let notes = data.get("notes");
+
+    let newProject = new Project(title, description, notes);
+
+    newProject.addProject();
+
+    formElem.reset();
+    renderProjectList();
+}
+
+export {newProjectFromFormInput}

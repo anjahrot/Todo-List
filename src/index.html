@@ -15,9 +15,9 @@
         <div class="modal-inner">
             <div class="modal-header">
                 <h3>New Project</h3>
-                <button class="modal-close" data-id="project-modal" aria-label="Close">
+                <span class="modalBtn modal-close" data-id="project-modal" aria-label="Close">
                     &times;
-                </button>
+                </span>
             </div>
             <form action="/project-form-page" method="post">
                 <ul>
@@ -34,7 +34,7 @@
                         <input type="text" id="notes" name="notes">
                     </li>
                 </ul>
-                <button class="submit_button" type="submit">Add Project</button>
+                <button class="submitProject" type="submit">Add Project</button>
             </form>
         </div>
     </div>
@@ -43,9 +43,9 @@
         <div class="modal-inner">
             <div class="modal-header">
                 <h3>New Todo</h3>
-                <button class="modal-close" data-id="todo-modal" aria-label="Close">
+                <span class="modalBtn modal-close" data-id="todo-modal" aria-label="Close">
                     &times;
-                </button>
+                </span>
             </div>
             <form action="/todo-form-page" method="post">
                 <ul>
@@ -63,7 +63,7 @@
                         <input type="text" id="notes" name="notes">
                     </li>
                 </ul>
-                <button class="submit_button" type="submit">Add Todo</button>
+                <button class="submitTodo" type="submit">Add Todo</button>
             </form>
         </div>
     </div>
@@ -76,8 +76,8 @@
         <div class="sidebar">
             <div class="heading">
                 <h2>My Projects</h2>
-                <button class="modal-open" data-id="project-modal">
-                    <img class="modal-open" data-id="project-modal" id='plus_img' src='../src/icons/plus-circle.svg'>
+                <button class="modalBtn modal-open" id="addProject" data-id="project-modal">
+                    <img id='plus_img' src='../src/icons/plus-circle.svg'>
                 </button>
             </div>
             <ul class="projectList">

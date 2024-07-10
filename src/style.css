@@ -56,14 +56,17 @@
 /* Sidebar buttons */
 .sidebar button {
     background-color: var(--bg-color-sidebar);
+    width: auto;
     color: var(--bg-color-text);
     font-size: var(--text-size);
     border-style: none;
     cursor: pointer;
 }
 
-.sidebar .modal-open {
-    border-radius: 50%;    
+.sidebar #addProject {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;  
 }
 
 .sidebar .projectItems {
@@ -107,7 +110,7 @@
     color: black;
 }
 
-.content .addTodo {
+.content #addTodo {
     background-color: var(--bg-color-main);
     border-style: none;
     cursor: pointer;
@@ -169,6 +172,22 @@
     border-bottom: 2px solid black;
     margin-bottom: 5px;
 }
+
+/* The Close Button */
+.modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .modal-close:hover,
+  .modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
 .modal form ul {
     display: flex;
     flex-direction: column;

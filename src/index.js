@@ -5,28 +5,23 @@ import {init} from './js/initial_pageload.js';
 import {Todo, addTodo} from './js/todos.js';
 
 import {projects, Project} from './js/projects.js';
-
+import { newProjectFromFormInput } from './js/projects.js';
 
 init();
 
-/* Finding items */
-const addTodoBtn = document.querySelector('.addTodo');
 
-/* Eventlisteners */
-addTodoBtn.addEventListener('click', addTodo);
-
+let ModalBtns = document.querySelectorAll('.modalBtn');
 let modal;
-document.addEventListener('click', (e) => {
-    console.log(e.target.className);
-    if (e.target.classList.contains('modal-open')) {
-        modal = document.getElementById(e.target.dataset.id);
+ModalBtns.forEach( item => item.addEventListener('click', (e) => {
+    if (e.currentTarget.classList.contains('modal-open')) {
+        modal = document.getElementById(e.currentTarget.dataset.id);
         openModal(modal);
-    } else if (e.target.className === "modal-close") {
+    } else if (e.currentTarget.classList.contains("modal-close")) {
         closeModal(modal);
     } else {
         return;    
     }
-});
+}));
 
 
 const openModal = (modal) => {
@@ -43,4 +38,9 @@ const closeModal = (modal) => {
     document.body.removeChild(document.querySelector("#modal-overlay"));
   };
 
+const submitProject = document.querySelector('.submitProject');
+const submitTodo = document.querySelector('.submitTodo');
+
+submitProject.addEventListener('click', newProjectFromFormInput);
+/* submitTodo.addEventListener('click', newTodoFromFormInput); */
 
