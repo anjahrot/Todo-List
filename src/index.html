@@ -19,7 +19,7 @@
                     &times;
                 </span>
             </div>
-            <form action="/project-form-page" method="post">
+            <form id="projectForm" action="/project-form-page" method="post">
                 <ul>
                     <li>
                         <label for="title">Project title</label>
@@ -34,7 +34,7 @@
                         <input type="text" id="notes" name="notes">
                     </li>
                 </ul>
-                <button class="submitProject" type="submit">Add Project</button>
+                <button class="submitProject modalBtn modal-close" type="submit">Add Project</button>
             </form>
         </div>
     </div>
@@ -47,7 +47,7 @@
                     &times;
                 </span>
             </div>
-            <form action="/todo-form-page" method="post">
+            <form id="todoForm" action="/todo-form-page" method="post">
                 <ul>
                     <li>
                         <label for="title">Title</label>
@@ -63,7 +63,7 @@
                         <input type="text" id="notes" name="notes">
                     </li>
                 </ul>
-                <button class="submitTodo" type="submit">Add Todo</button>
+                <button class="submitTodo modalBtn modal-close" type="submit">Add Todo</button>
             </form>
         </div>
     </div>

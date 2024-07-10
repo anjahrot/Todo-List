@@ -131,15 +131,15 @@
 /* footer */
 .footer {
     grid-area: footer;
-    background-color: blueviolet;
+    background-color: var(--bg-color-text);
     padding: 20px;
-    color: var(--bg-color-text);
+    color: var(--bg-color-sidebar);
     font-size: var(--text-size);
 }
 
 .footer a {
     text-decoration: none;
-    color: var(--bg-color-text);
+    color: var(--bg-color-sidebar);
 }
 
 /* Popup modal forms */
@@ -174,7 +174,7 @@
 }
 
 /* The Close Button */
-.modal-close {
+span .modal-close {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -204,8 +204,10 @@
     padding: 5px;
     font-size: 20px;
 }
-.submit_button {
-    padding: 2px 15px;
+
+.submitTodo,
+.submitProject {
+    padding: 5px 15px;
     margin-top: 10px;
     cursor: pointer;
 }

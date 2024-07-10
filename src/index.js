@@ -4,7 +4,7 @@ import {init} from './js/initial_pageload.js';
 
 import {Todo, addTodo} from './js/todos.js';
 
-import {projects, Project} from './js/projects.js';
+import {projects, Project, addProjectToList} from './js/projects.js';
 import { newProjectFromFormInput } from './js/projects.js';
 
 init();
@@ -38,9 +38,31 @@ const closeModal = (modal) => {
     document.body.removeChild(document.querySelector("#modal-overlay"));
   };
 
+
+
+
 const submitProject = document.querySelector('.submitProject');
 const submitTodo = document.querySelector('.submitTodo');
 
 submitProject.addEventListener('click', newProjectFromFormInput);
 /* submitTodo.addEventListener('click', newTodoFromFormInput); */
 
+
+const Tasks = new Project('Tasks','default');
+
+addProjectToList(Tasks.showProjectTitle());
+console.log(projects);
+const projectList = document.querySelector('.projectList');
+
+function renderProjectList () {
+    projectList.innerHTML = '';
+    const ul = document.createElement('ul');
+    projects.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+    })
+    projectList.appendChild(ul);
+}
+
+export {renderProjectList};

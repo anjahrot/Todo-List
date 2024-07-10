@@ -1,27 +1,30 @@
 import Todo from './todos.js';
+import { renderProjectList } from '../index.js';
 
 const projects = []; 
 
-export default class Project {
-    constructor (title, description = '', notes = '') {
+export class Project {
+    constructor (title, description, notes) {
         this.title = title;
         this.description = description;
         this.notes = notes;
     }
 
-    showProject(){
-
+    showProjectTitle(){
+        return this.title;
     }
 
-    addProject(){
-        projects.push[this.title];
-    }
 
     addTodo() {
 
     }
-
 }
+
+function addProjectToList(project) {
+    projects.push(project);
+}
+
+const formElem = document.querySelector('#projectForm');
 
 function newProjectFromFormInput (event) {
     event.preventDefault();
@@ -33,10 +36,11 @@ function newProjectFromFormInput (event) {
 
     let newProject = new Project(title, description, notes);
 
-    newProject.addProject();
+    addProjectToList(newProject.showProjectTitle());
 
     formElem.reset();
-    renderProjectList();
+    console.log(newProject.showProjectTitle());
+    renderProjectList(); 
 }
 
-export {newProjectFromFormInput}
+export {newProjectFromFormInput, projects, addProjectToList}
