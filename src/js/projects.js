@@ -1,46 +1,23 @@
-import Todo from './todos.js';
-import { renderProjectList } from '../index.js';
-
-const projects = []; 
-
 export class Project {
-    constructor (title, description, notes) {
-        this.title = title;
+    constructor (name, description = '', todos = []) {
+        this.name = name;
         this.description = description;
-        this.notes = notes;
+        this.todos = todos;
     }
 
-    showProjectTitle(){
-        return this.title;
+    showProjectName(){
+        return this.name;
     }
 
-
-    addTodo() {
-
+    addTodo(todo) {
+        this.todos.push(todo);
     }
-}
 
-function addProjectToList(project) {
-    projects.push(project);
-}
+    removeTodo(index) {
+        this.todos.splice(index, 1);
+    }
 
-const formElem = document.querySelector('#projectForm');
-
-function newProjectFromFormInput (event) {
-    event.preventDefault();
-
-    const data = new FormData(formElem);
-    let title = data.get("project_title");
-    let description = data.get("project_description");
-    let notes = data.get("notes");
-
-    let newProject = new Project(title, description, notes);
-
-    addProjectToList(newProject.showProjectTitle());
-
-    formElem.reset();
-    console.log(newProject.showProjectTitle());
-    renderProjectList(); 
-}
-
-export {newProjectFromFormInput, projects, addProjectToList}
+    getTodos = () => {
+        return this.todos;
+    }
+};

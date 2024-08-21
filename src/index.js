@@ -1,13 +1,11 @@
 import './style.css';
 
-import {init} from './js/initial_pageload.js';
+import domManager from './js/domManager';
+import storageManager from './js/localStorage';
 
-import {Todo, addTodo} from './js/todos.js';
+//Initial render
 
-import {projects, Project, addProjectToList} from './js/projects.js';
-import { newProjectFromFormInput } from './js/projects.js';
-
-init();
+domManager.renderProjects(storageManager.getProjects());
 
 
 let ModalBtns = document.querySelectorAll('.modalBtn');
@@ -39,30 +37,51 @@ const closeModal = (modal) => {
   };
 
 
-
-
 const submitProject = document.querySelector('.submitProject');
 const submitTodo = document.querySelector('.submitTodo');
 
 submitProject.addEventListener('click', newProjectFromFormInput);
 /* submitTodo.addEventListener('click', newTodoFromFormInput); */
 
+const formElem = document.querySelector('#projectForm');
 
-const Tasks = new Project('Tasks','default');
+function newProjectFromFormInput (event) {
+    event.preventDefault();
 
-addProjectToList(Tasks.showProjectTitle());
-console.log(projects);
-const projectList = document.querySelector('.projectList');
+    const data = new FormData(formElem);
+    let title = data.get("project_name");
+    let description = data.get("project_description");
+    let todos = data.get("todos");
 
-function renderProjectList () {
-    projectList.innerHTML = '';
-    const ul = document.createElement('ul');
-    projects.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        ul.appendChild(li);
-    })
-    projectList.appendChild(ul);
+    storageManager.addProject(title, description, todos);
+    domManager.renderProjects(storageManager.getProjects());
+    formElem.reset();
 }
 
-export {renderProjectList};
+// check availability of localstorage
+function storageAvailable(type) {
+    let storage;
+    try {
+      storage = window[type];
+      const x = "__storage_test__";
+      storage.setItem(x, x);
+      storage.removeItem(x);
+      return true;
+    } catch (e) {
+      return (
+        e instanceof DOMException &&
+        e.name === "QuotaExceededError" &&
+        // acknowledge QuotaExceededError only if there's something already stored
+        storage &&
+        storage.length !== 0
+      );
+    }
+  }
+
+  if (storageAvailable("localStorage")) {
+    console.log('Yippee! We can use localStorage awesomeness');
+  } else {
+    console.log('Too bad, no localStorage for us');
+  }
+
+

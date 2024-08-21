@@ -78,14 +78,14 @@
     align-items: center;
 }
 
-#plus_img {
+.plus_img {
     filter: invert(1);
     width: 30px;
     height: auto;
 }
 
-.sidebar .projectItems svg {
-    fill: var(--bg-color-text);
+#selectIcon {
+    filter: invert(1);
     width: 20px;
     height: auto;
 }
