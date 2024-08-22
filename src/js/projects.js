@@ -1,8 +1,9 @@
+let todos = [];
+
 export class Project {
-    constructor (name, description = '', todos = []) {
+    constructor (name, description = '') {
         this.name = name;
         this.description = description;
-        this.todos = todos;
     }
 
     showProjectName(){
@@ -10,14 +11,14 @@ export class Project {
     }
 
     addTodo(todo) {
-        this.todos.push(todo);
+        todos.push(todo);
     }
 
     removeTodo(index) {
-        this.todos.splice(index, 1);
+        todos.splice(index, 1);
     }
 
     getTodos = () => {
-        return this.todos;
+        return todos;
     }
 };

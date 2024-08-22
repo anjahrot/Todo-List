@@ -29,10 +29,6 @@
                         <label for="description">Project description</label>
                         <input type="text" id="description" name="project_description">
                     </li>
-                    <li>
-                        <label for="todos">Todos:</label>
-                        <input type="text" id="todos" name="todos">
-                    </li>
                 </ul>
                 <button class="submitProject modalBtn modal-close" type="submit">Add Project</button>
             </form>
@@ -77,20 +73,24 @@
             <div class="heading">
                 <h2>My Projects</h2>
                 <button class="modalBtn modal-open" id="addProject" data-id="project-modal">
-                    <img class='plus_img' src='../src/icons/plus-circle.svg' alt="addSign">
+                    <img id='plus_img_sidebar' src='../src/icons/plus-circle.svg' alt="addSign">
                 </button>
             </div>
             <ul class="projectList"></ul>
         </div>
         <div class="content">
-            <div class="currentProjectName"></div>
-            <div class="addTodo">
-                <h2>Add Todo</h2>
-                <button class="modalBtn modal-open" id="addTodo" data-id="todo-modal">
-                    <img class='plus_img icon' src="../src/icons/plus-circle.svg" alt="addSign">
-                </button>
+            <div class="top">
+                <div class="currentProjectName"></div>
+                <div class="addTodo">
+                    <h2>Add Todo</h2>
+                    <button class="modalBtn modal-open" id="addTodoBtn" data-id="todo-modal">
+                        <img id='plus_img_content' src="../src/icons/plus-circle.svg" alt="addSign">
+                    </button>
+                </div>
             </div>
+            <div class="moreOnProject">
             <!-- Manipulating DOM to show items selected -->
+            </div>
         </div>
         <div class="footer">
             <p>Icons from <a href="https://pictogrammers.com/library/mdi/"</a>pictogrammers.com</p>

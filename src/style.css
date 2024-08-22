@@ -78,13 +78,13 @@
     align-items: center;
 }
 
-.plus_img {
+#plus_img_sidebar {
     filter: invert(1);
     width: 30px;
     height: auto;
 }
 
-#selectIcon {
+#sidebarIcon {
     filter: invert(1);
     width: 20px;
     height: auto;
@@ -110,20 +110,32 @@
     color: black;
 }
 
-.content #addTodo {
+.content .top {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.currentProjectName {
+    font-size: 40px;
+}
+
+.content #addTodoBtn {
     background-color: var(--bg-color-main);
     border-style: none;
     cursor: pointer;
     border-radius: 50%;
 }
 
-.content .icon {
+#plus_img_content {
     width: 30px;
     height: auto;
     /* filter: invert(1); */
 }
 
-.init-container {
+.content .addTodo {
     display: flex;
     gap: 15px;
 }
