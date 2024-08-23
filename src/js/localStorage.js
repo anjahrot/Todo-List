@@ -24,20 +24,11 @@ const storageManager = (()=> {
         if (storedProjects) {
             projects = JSON.parse(storedProjects).map(item => {
                 const project = new Project(item.name, item.description, item.todos);
-                if (project.todos) {
-                project.getTodos().forEach(todoData => {
-                    const todo = new Todo(
-                        todoData.title,
-                        todoData.dueDate,
-                        todoData.priority,
-                        todoData.notes
-                    );
-                    project.addTodo(todo);
-                });
-                }
+                
                 return project;
-            });
-        }
+                });    
+            };
+    
 
          // Check if storedCurrentProject exists
          if (storedCurrentProject){
@@ -72,15 +63,17 @@ const storageManager = (()=> {
     }
 
     const addProject = (name, description, todos) => {
-        const project = new Project(name, description, todos);
+        const project = new Project(name, description, todos = []);
         projects.push(project);
         saveToLocalStorage();
     }
 
     const addTodoToProject = (title, dueDate, priority, notes) => {
-        const todo = new Todo(title, dueDate, priority, notes);
+        const newTodo = new Todo(title, dueDate, priority, notes);
         const currentProject = getCurrentProject();
-        currentProject.addTodo(todo);
+        console.log(currentProject);
+        currentProject.addTodo(newTodo);
+        console.log('Test', currentProject);
     }
 
     const removeProject = (index) => {
@@ -106,6 +99,12 @@ const storageManager = (()=> {
         return currentProject.getTodos;
     }
 
+    const removeTodo = (index) => {
+        currentProject = getCurrentProject();
+        currentProject.todos.splice(index,1);
+        saveToLocalStorage();
+    }
+
 
     //Initialize project with todos upon loading page
     loadFromLocalStorage();
@@ -122,7 +121,8 @@ const storageManager = (()=> {
         getTodosInCurrentProject,
         saveToLocalStorage,
         loadFromLocalStorage,
-        addTodoToProject
+        addTodoToProject,
+        removeTodo
     }
 })();
 

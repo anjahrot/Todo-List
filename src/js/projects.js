@@ -5,10 +5,6 @@ export class Project {
         this.todos = todos;
     }
 
-    showProjectName(){
-        return this.name;
-    }
-
     addTodo(todo) {
         this.todos.push(todo);
     }

@@ -9,7 +9,6 @@ const domManager = (() => {
     const todoList = document.querySelector('.todosInCurrentProject');
 
     const renderProjects = () => {
-        
         projectList.innerHTML = '';
         
         currentProjectHeading.textContent = storageManager.getCurrentProjectName();
@@ -37,10 +36,10 @@ const domManager = (() => {
 
             myDeleteIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
-                //if (index === 0) {
-                    //alert('Can not delete default project!')
-                //}
-                if (confirm('Are you sure you want to delete this project?')){   
+                if (index === 0) {
+                    alert('Can not delete default project!')
+                }
+                else if (confirm('Are you sure you want to delete this project?')){   
                     if (currentProjectHeading.textContent === storageManager.getProjects()[index].name) {
                         storageManager.setCurrentProject('Tasks');  //Set to default project if current is deleted
                     }
@@ -60,21 +59,48 @@ const domManager = (() => {
     const renderTodos = () => {
         todoList.innerHTML = '';
         if(storageManager.getCurrentProject().todos){
+          console.log(storageManager.getCurrentProject().todos);
           storageManager.getCurrentProject().todos.forEach((item, index) => {
             const todoItem = document.createElement('div');
+            todoItem.classList.add('todoItem');
+            todoItem.style.backgroundColor = priorityColorCoding(item.priority);
             const todoTitle = document.createElement('h2');
             todoTitle.textContent = item.title;
             const todoDuedate =  document.createElement('h3');
-            todoDuedate.textContent = item.dueDate;
+            todoDuedate.textContent = 'Due date: ' + item.dueDate;
+
+            const myDeleteIcon = new Image();
+            myDeleteIcon.src = deleteIcon;
+            myDeleteIcon.setAttribute('id','content_icon')
+
+            myDeleteIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm('Are you sure you want to delete this task?')){   
+                    storageManager.removeTodo(index);
+                    renderTodos();
+                }
+            });
 
             todoItem.appendChild(todoTitle);
             todoItem.appendChild(todoDuedate);
+            todoItem.appendChild(myDeleteIcon);
             todoList.appendChild(todoItem);
         })
         }
     }
+
+    const priorityColorCoding = (value) => {
+        switch (value) {
+            case 'low':
+                return '#d4edda';
+            case 'important':
+                return '#fff3cd';
+            case 'urgent':
+                return '#f8d7da';
+        }
+    }
     
-    return {renderProjects, renderTodos};
+    return {renderProjects, renderTodos, priorityColorCoding};
 })();
 
 export default domManager;

@@ -4,11 +4,10 @@ import domManager from './js/domManager';
 import storageManager from './js/localStorage';
 
 //Initial render
-
 domManager.renderProjects(storageManager.getProjects());
 domManager.renderTodos(storageManager.getTodosInCurrentProject());
 
-
+//modal to create/edit projects and todos 
 let ModalBtns = document.querySelectorAll('.modalBtn');
 let modal;
 ModalBtns.forEach( item => item.addEventListener('click', (e) => {
@@ -21,7 +20,6 @@ ModalBtns.forEach( item => item.addEventListener('click', (e) => {
         return;    
     }
 }));
-
 
 const openModal = (modal) => {
     document.body.style.overflow = "hidden";
@@ -36,7 +34,6 @@ const closeModal = (modal) => {
     modal.removeAttribute("open");
     document.body.removeChild(document.querySelector("#modal-overlay"));
   };
-
 
 const submitProject = document.querySelector('.submitProject');
 const submitTodo = document.querySelector('.submitTodo');
@@ -74,32 +71,5 @@ function newTodoFromFormInput (event) {
   domManager.renderTodos(storageManager.getTodosInCurrentProject());
   formElemTodo.reset();
 };
-
-
-// Check availability of localstorage
-// function storageAvailable(type) {
-//     let storage;
-//     try {
-//       storage = window[type];
-//       const x = "__storage_test__";
-//       storage.setItem(x, x);
-//       storage.removeItem(x);
-//       return true;
-//     } catch (e) {
-//       return (
-//         e instanceof DOMException &&
-//         e.name === "QuotaExceededError" &&
-//         // acknowledge QuotaExceededError only if there's something already stored
-//         storage &&
-//         storage.length !== 0
-//       );
-//     }
-//   }
-
-//   if (storageAvailable("localStorage")) {
-//     console.log('Yippee! We can use localStorage awesomeness');
-//   } else {
-//     console.log('Too bad, no localStorage for us');
-//   }
 
 
