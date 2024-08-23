@@ -47,12 +47,30 @@
                 <ul>
                     <li>
                         <label for="title">Title</label>
-                        <input type="text" id="title" name="project_title" required>
+                        <input type="text" id="title" name="todo_title" required>
                     </li>
                     <li>
                         <label for="dueDate">Due Date</label>
                         <input type="date" id="dueDate" name="dueDate">
                     </li>
+                    <fieldset>
+                        <legend>Priority:</legend>
+                      
+                        <div>
+                          <input type="radio" id="low" name="prio" value="low" checked />
+                          <label for="low">Low</label>
+                        </div>
+                      
+                        <div>
+                          <input type="radio" id="important" name="prio" value="important" />
+                          <label for="important">Important</label>
+                        </div>
+                      
+                        <div>
+                          <input type="radio" id="urgent" name="prio" value="urgent" />
+                          <label for="urgent">Urgent</label>
+                        </div>
+                      </fieldset>
                     <!-- Nedtrekksliste eller radiobuttons for priority -->
                     <li>
                         <label for="notes">Notes:</label>
@@ -88,7 +106,7 @@
                     </button>
                 </div>
             </div>
-            <div class="moreOnProject">
+            <div class="todosInCurrentProject">
             <!-- Manipulating DOM to show items selected -->
             </div>
         </div>

@@ -9,47 +9,58 @@ const storageManager = (()=> {
     const saveToLocalStorage = () => {
         localStorage.setItem('projects', JSON.stringify(projects.map(project => ({
             name: project.name,
-            description: project.description
-            /*todos: project.getTodos().map(todo => ({
-                title: todo.title,
-                dueDate: todo.dueDate,
-                priority: todo.priority,
-                notes: todo.notes
-            }))*/
+            description: project.description,
+            todos: project.todos
         }))));
-        localStorage.setItem('currentProject', JSON.stringify(currentProject));
+        localStorage.setItem('currentProject', JSON.stringify(currentProject ? {name: currentProject.name } : null));
+        console.log('Save', currentProject);
     };
 
     const loadFromLocalStorage = () => {
         const storedProjects = localStorage.getItem('projects');
-        const storedCurrentProject = localStorage.getItem('currentProject');    
+        const storedCurrentProject = localStorage.getItem('currentProject');
+        
 
         if (storedProjects) {
             projects = JSON.parse(storedProjects).map(item => {
-                const project = new Project(item.name, item.description);
-                /*project.todos.foreach(todoData => {
+                const project = new Project(item.name, item.description, item.todos);
+                if (project.todos) {
+                project.getTodos().forEach(todoData => {
                     const todo = new Todo(
                         todoData.title,
                         todoData.dueDate,
                         todoData.priority,
                         todoData.notes
                     );
-                    project.addTodo(todo);*/
-            
+                    project.addTodo(todo);
+                });
+                }
                 return project;
             });
         }
 
-        if (storedCurrentProject) {
-            currentProject = JSON.parse(storedCurrentProject);
+         // Check if storedCurrentProject exists
+         if (storedCurrentProject){
+            try {
+                const currentProjectData = JSON.parse(storedCurrentProject);
+                currentProject = projects.find(project => project.name === currentProjectData.name) || null;
+            } catch (error){
+                console.error("Error parsing current project data from localStorage", error);
+                currentProject = null;
+            }
         } else {
-            currentProject = 'Tasks';  //If not stored, then default project name Tasks
+            currentProject = null;
         }
     
         //Add default project if empty
         if (!projects.length) {
-            const defaultProject = new Project('Tasks');
+            const defaultProject = new Project('Tasks', 'default-start');
             projects.push(defaultProject);
+            const defaultTodo = new Todo('Finish Todo-app', '23-09-2024');
+            defaultProject.addTodo(defaultTodo);
+            const newTodo = new Todo('Walk the dog', '23-08-2024');
+            defaultProject.addTodo(newTodo);
+            currentProject = defaultProject;
             };
 
         saveToLocalStorage();    
@@ -64,7 +75,12 @@ const storageManager = (()=> {
         const project = new Project(name, description, todos);
         projects.push(project);
         saveToLocalStorage();
+    }
 
+    const addTodoToProject = (title, dueDate, priority, notes) => {
+        const todo = new Todo(title, dueDate, priority, notes);
+        const currentProject = getCurrentProject();
+        currentProject.addTodo(todo);
     }
 
     const removeProject = (index) => {
@@ -77,9 +93,18 @@ const storageManager = (()=> {
         saveToLocalStorage();
     };
 
+    const getCurrentProject = () => {
+        return currentProject;
+    }
+
     const getCurrentProjectName = () => {
          return currentProject.name;
      }
+
+    const getTodosInCurrentProject = () => {
+        currentProject = getCurrentProject();
+        return currentProject.getTodos;
+    }
 
 
     //Initialize project with todos upon loading page
@@ -92,9 +117,12 @@ const storageManager = (()=> {
         addProject,
         removeProject,
         setCurrentProject,
+        getCurrentProject,
         getCurrentProjectName,
+        getTodosInCurrentProject,
         saveToLocalStorage,
-        loadFromLocalStorage
+        loadFromLocalStorage,
+        addTodoToProject
     }
 })();
 
