@@ -62,6 +62,7 @@ const domManager = (() => {
         todoList.innerHTML = '';
         if(storageManager.getCurrentProject().todos){
           storageManager.getCurrentProject().todos.forEach((item, index) => {
+            
             const todoItem = document.createElement('div');
             todoItem.classList.add('todoItem');
             todoItem.style.backgroundColor = priorityColorCoding(item.priority);
@@ -92,47 +93,82 @@ const domManager = (() => {
             const todoDuedate =  document.createElement('h5');
             todoDuedate.textContent = 'Due date: ' + item.dueDate;
 
-            const todoBtns = document.createElement('div');
-            const myDeleteIcon = new Image();
-            myDeleteIcon.src = deleteIcon;
-            myDeleteIcon.setAttribute('id','content_icon');
-
-            const mySelectIcon = new Image();
-            mySelectIcon.src = selectIcon;
-            mySelectIcon.setAttribute('id', 'content_icon');
-
-            myDeleteIcon.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (confirm('Are you sure you want to delete this task?')){   
-                    storageManager.removeTodo(index);
-                    renderTodos();
-                }
-            });
-
-            mySelectIcon.addEventListener('click', (e) => {
-                e.stopPropagation();
-                renderTodoDetails(index);
-            })
-
             todoInfo.appendChild(checkbox);
             todoTitleAndDate.appendChild(todoTitle);
             todoTitleAndDate.appendChild(todoDuedate);
             todoInfo.appendChild(todoTitleAndDate);
-            todoBtns.appendChild(mySelectIcon);
-            todoBtns.appendChild(myDeleteIcon);
+            
             todoItem.appendChild(todoInfo);
-            todoItem.appendChild(todoBtns);
+            //append row of buttons
+            const type = 'todoGeneral';
+            todoItem.appendChild(addBtnsTodo(type, index));
             todoList.appendChild(todoItem);
         })
         }
     }
 
+    const addBtnsTodo = (type, index) => {
+        const todoButtons = document.createElement('div');
+        const myDeleteIcon = new Image();
+        myDeleteIcon.src = deleteIcon;
+        myDeleteIcon.setAttribute('id','content_icon');
+
+        const myEditIcon = new Image();
+        myEditIcon.src = editIcon;
+        myEditIcon.setAttribute('id', 'content_icon');
+
+        const mySelectIcon = new Image();
+        mySelectIcon.src = selectIcon;
+        mySelectIcon.setAttribute('id', 'content_icon');
+
+        const exitButton = document.createElement('button');
+        exitButton.textContent = 'X';
+        exitButton.setAttribute('id','details-close');
+
+        myDeleteIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (confirm('Are you sure you want to delete this task?')){   
+                storageManager.removeTodo(index);
+                renderTodos();
+            }
+        });
+
+        myEditIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            editTodo(index);
+        })
+
+        mySelectIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            renderTodoDetails(index);
+        })
+
+        exitButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            renderTodos();
+        })
+        
+        if(type === 'todoDetails'){
+            const todoPrioLevel = getTodoPriority(index); 
+            exitButton.style.backgroundColor = priorityColorCoding(todoPrioLevel);
+            todoButtons.appendChild(exitButton);
+        }
+        else {
+            todoButtons.appendChild(mySelectIcon);
+        }
+        todoButtons.appendChild(myEditIcon);
+        todoButtons.appendChild(myDeleteIcon);
+        
+        return todoButtons;
+    }
+
+    
     const renderTodoDetails = (todo) => {
         todoList.innerHTML = '';
         const currentTodo = storageManager.getCurrentProject().todos[todo];
-        const todoItemDetails = document.createElement('div');
-        todoItemDetails.classList.add('todoItem', 'todoDetails');
-        todoItemDetails.style.backgroundColor = priorityColorCoding(currentTodo.priority);
+        const todoItem = document.createElement('div');
+        todoItem.classList.add('todoItem', 'todoDetails');
+        todoItem.style.backgroundColor = priorityColorCoding(currentTodo.priority);
         const todoTitle = document.createElement('h3');
         todoTitle.textContent = currentTodo.title;
         const todoDuedate =  document.createElement('h5');
@@ -142,11 +178,19 @@ const domManager = (() => {
         const todoNotes = document.createElement('p');
         todoNotes.textContent = 'Notes: ' + currentTodo.notes;
 
-        todoItemDetails.appendChild(todoTitle);
-        todoItemDetails.appendChild(todoDuedate);
-        todoItemDetails.appendChild(todoPriority);
-        todoItemDetails.appendChild(todoNotes);
-        todoList.appendChild(todoItemDetails); 
+        todoItem.appendChild(todoTitle);
+        todoItem.appendChild(todoDuedate);
+        todoItem.appendChild(todoPriority);
+        todoItem.appendChild(todoNotes);
+        //append row of buttons
+        const type = 'todoDetails';
+        todoItem.appendChild(addBtnsTodo(type, todo));
+        todoList.appendChild(todoItem); 
+    }
+
+    const getTodoPriority = (todo) => {
+        const currentTodo = storageManager.getCurrentProject().todos[todo];
+        return currentTodo.priority;
     }
 
     const priorityColorCoding = (value) => {
@@ -160,7 +204,7 @@ const domManager = (() => {
         }
     }
     
-    return {renderProjects, renderTodos, renderTodoDetails, priorityColorCoding};
+    return {renderProjects, renderTodos, addBtnsTodo, renderTodoDetails, getTodoPriority, priorityColorCoding};
 })();
 
 export default domManager;

@@ -141,6 +141,7 @@
 #plus_img_content {
     width: 30px;
     height: auto;
+    padding: 0 5px;
     /* filter: invert(1); */
 }
 
@@ -163,6 +164,15 @@
     margin: 5px 20px;
     width: 30px;
     height: 30px;
+}
+
+#details-close {
+    border: none;
+    height: 30px;
+    width: 30px;
+    font-weight: bold;
+    font-size: 26px;
+    padding: 0 5px;
 }
 
 .completed-todo {
