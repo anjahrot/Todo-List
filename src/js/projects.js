@@ -16,4 +16,8 @@ export class Project {
     getTodos = () => {
         return this.todos;
     }
+
+    getTodo = (index) => {
+        return this.todos[index];
+    }
 };

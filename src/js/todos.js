@@ -1,21 +1,12 @@
 export class Todo {
-    constructor(title = '', dueDate = '', priority = 'low', notes = ''){
+    constructor(title = '', dueDate = '', priority = 'low', notes = '', checklist = []){
         this.title = title;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
+        this.checklist = checklist;
+        this.completed = false;
     } 
 
-    showItem() {
-        console.log(`${this.title} - Due: ${this.dueDate}`); /* Change to DOM-function*/
-    }
-
-    addChecklist() {
-        addIcon(); /* DOM-stuff */
-    }
-
-    changePriority() {
-        /* DOM-buttons */
-    }
 };
 

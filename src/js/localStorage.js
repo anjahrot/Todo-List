@@ -71,9 +71,7 @@ const storageManager = (()=> {
     const addTodoToProject = (title, dueDate, priority, notes) => {
         const newTodo = new Todo(title, dueDate, priority, notes);
         const currentProject = getCurrentProject();
-        console.log(currentProject);
         currentProject.addTodo(newTodo);
-        console.log('Test', currentProject);
     }
 
     const removeProject = (index) => {
@@ -101,8 +99,12 @@ const storageManager = (()=> {
 
     const removeTodo = (index) => {
         currentProject = getCurrentProject();
-        currentProject.todos.splice(index,1);
+        currentProject.removeTodo(index,1);
         saveToLocalStorage();
+    }
+
+    const toggleCompleted = (item) => {
+      return item.completed  ? false : true;
     }
 
 
@@ -122,7 +124,8 @@ const storageManager = (()=> {
         saveToLocalStorage,
         loadFromLocalStorage,
         addTodoToProject,
-        removeTodo
+        removeTodo,
+        toggleCompleted
     }
 })();
 

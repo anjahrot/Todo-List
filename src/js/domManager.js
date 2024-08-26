@@ -36,10 +36,11 @@ const domManager = (() => {
 
             myDeleteIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (index === 0) {
-                    alert('Can not delete default project!')
-                }
-                else if (confirm('Are you sure you want to delete this project?')){   
+                //if (index === 0) {
+                    //alert('Can not delete default project!')
+                //}
+                //else 
+                if (confirm('Are you sure you want to delete this project?')){   
                     if (currentProjectHeading.textContent === storageManager.getProjects()[index].name) {
                         storageManager.setCurrentProject('Tasks');  //Set to default project if current is deleted
                     }
@@ -64,11 +65,36 @@ const domManager = (() => {
             const todoItem = document.createElement('div');
             todoItem.classList.add('todoItem');
             todoItem.style.backgroundColor = priorityColorCoding(item.priority);
-            const todoTitle = document.createElement('h2');
+
+            const todoInfo = document.createElement('div');
+            todoInfo.classList.add('todoInfo');
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = item.completed;
+            console.log(checkbox.checked);
+            checkbox.classList.add('todo-checkbox');
+
+            checkbox.addEventListener('click', (e) => {
+                e.stopPropagation();
+                item.completed = storageManager.toggleCompleted(item);
+                console.log(item.completed);
+                storageManager.saveToLocalStorage();
+                renderTodos();
+            })
+
+            //Add classname to style completed todos
+            if(item.completed) {
+                todoItem.classList.add('completed-todo');
+            }
+
+            const todoTitleAndDate = document.createElement('div');
+            const todoTitle = document.createElement('h3');
             todoTitle.textContent = item.title;
-            const todoDuedate =  document.createElement('h3');
+            const todoDuedate =  document.createElement('h5');
             todoDuedate.textContent = 'Due date: ' + item.dueDate;
 
+            const todoBtns = document.createElement('div');
             const myDeleteIcon = new Image();
             myDeleteIcon.src = deleteIcon;
             myDeleteIcon.setAttribute('id','content_icon')
@@ -81,9 +107,13 @@ const domManager = (() => {
                 }
             });
 
-            todoItem.appendChild(todoTitle);
-            todoItem.appendChild(todoDuedate);
-            todoItem.appendChild(myDeleteIcon);
+            todoInfo.appendChild(checkbox);
+            todoTitleAndDate.appendChild(todoTitle);
+            todoTitleAndDate.appendChild(todoDuedate);
+            todoInfo.appendChild(todoTitleAndDate);
+            todoBtns.appendChild(myDeleteIcon);
+            todoItem.appendChild(todoInfo);
+            todoItem.appendChild(todoBtns);
             todoList.appendChild(todoItem);
         })
         }
