@@ -13,7 +13,6 @@ const storageManager = (()=> {
             todos: project.todos
         }))));
         localStorage.setItem('currentProject', JSON.stringify(currentProject ? {name: currentProject.name } : null));
-        console.log('Save', currentProject);
     };
 
     const loadFromLocalStorage = () => {

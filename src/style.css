@@ -144,6 +144,7 @@
     /* filter: invert(1); */
 }
 
+/* Todo items*/
 .todoItem {
     display: flex;
     justify-content: space-between;
@@ -212,13 +213,14 @@
     justify-content: space-between;
     border-bottom: 2px solid black;
     margin-bottom: 5px;
+    font-size: 26px;
 }
 
 /* The Close Button */
-span .modal-close {
+.modal-close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 36px;
     font-weight: bold;
   }
   
@@ -232,25 +234,37 @@ span .modal-close {
 .modal form ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     list-style: none;
-}
+ }
 .modal form label {
     display: block;
     text-align: left;
-}
+    padding-right: 10px;
+} 
+
 .modal form input {
     width: 300px;
     height: 20px;
     padding: 5px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
+.priorityBoxes {
+    display: flex;
+} 
+
+.priorityBoxes input[type=radio] {
+    width: 30px;
+    margin-bottom: 5px;
+}
+  
 .submitTodo,
 .submitProject {
     padding: 5px 15px;
     margin-top: 10px;
     cursor: pointer;
+    font-size: 20px;
 }
 #modal-overlay {
     width: 100%;
