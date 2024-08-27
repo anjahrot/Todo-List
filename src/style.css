@@ -142,6 +142,7 @@
     width: 30px;
     height: auto;
     padding: 0 5px;
+    cursor: pointer;
     /* filter: invert(1); */
 }
 
@@ -166,13 +167,31 @@
     height: 30px;
 }
 
+.btnRow {
+    display: flex;
+}
+
+.todoDetails {
+    display: flex;
+    align-items: flex-start;
+}
+
 #details-close {
+    display: flex;
+    align-items: center;
     border: none;
-    height: 30px;
     width: 30px;
-    font-weight: bold;
-    font-size: 26px;
+    height: 30px;
+    font-weight: bold; 
+    font-size: 30px;
     padding: 0 5px;
+    cursor: pointer;
+}
+
+.detailsText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .completed-todo {
