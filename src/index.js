@@ -21,9 +21,6 @@ ModalBtns.forEach( item => item.addEventListener('click', (e) => {
     }
 }));
 
-//Title and text of buttons in form changing depending on new or updated entry
-const todoDialogTitle = document.querySelector('.todoDialogTitle');
-
 const openModal = (modal) => {
     document.body.style.overflow = "hidden";
     modal.setAttribute("open", "true");

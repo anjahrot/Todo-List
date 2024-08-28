@@ -108,6 +108,7 @@ const domManager = (() => {
         }
     }
 
+    //Adding row of buttons to a todo-listing (select/exit, edit and delete )
     const addBtnsTodo = (type, index) => {
         const todoButtons = document.createElement('div');
         todoButtons.classList.add('btnRow');
@@ -119,7 +120,7 @@ const domManager = (() => {
         myEditIcon.src = editIcon;
         myEditIcon.classList.add('modalBtn', 'modal-open');
         myEditIcon.setAttribute('data-id', 'todo-modal');
-        myEditIcon.setAttribute('id', 'content_icon');
+        myEditIcon.setAttribute('id', 'editTodoBtn');
 
         const mySelectIcon = new Image();
         mySelectIcon.src = selectIcon;
@@ -136,11 +137,6 @@ const domManager = (() => {
                 renderTodos();
             }
         });
-
-        // myEditIcon.addEventListener('click', (e) => {
-        //     e.stopPropagation();
-        //     editTodo(index);
-        // })
 
         mySelectIcon.addEventListener('click', (e) => {
             e.stopPropagation();

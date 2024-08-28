@@ -137,6 +137,7 @@
     border-radius: 50%;
 }
 
+#editTodoBtn,
 #content_icon,
 #plus_img_content {
     width: 30px;
