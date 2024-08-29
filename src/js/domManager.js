@@ -1,9 +1,7 @@
 import storageManager from "./localStorage";
 import selectIcon from '../icons/select.svg';
 import deleteIcon from '../icons/trash-can.svg';
-import editIcon from '../icons/note-edit.svg';
-
-const {format, formatDistanceToNow} = require("date-fns");
+import editIcon from '../icons/note-edit.svg'
 
 const domManager = (() => {
 
@@ -39,11 +37,10 @@ const domManager = (() => {
 
             myDeleteIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // if (index === 0) {
-                //     alert('Can not delete default project');
-                // }
-                //else 
-                if (confirm('Are you sure you want to delete this project?')){   
+                if (index === 0) {
+                    alert('Can not delete default project');
+                }
+                else if (confirm('Are you sure you want to delete this project?')){   
                     if (currentProjectHeading.textContent === storageManager.getProjects()[index].name) {
                         storageManager.setCurrentProject('Tasks');  //Set to default project if current is deleted
                     }
@@ -93,7 +90,7 @@ const domManager = (() => {
             const todoTitle = document.createElement('h3');
             todoTitle.textContent = item.title;
             const todoDuedate =  document.createElement('h5');
-            todoDuedate.textContent = 'Due date: ' + format(item.dueDate, 'dd/MM/yyyy');
+            todoDuedate.textContent = 'Due date: ' + item.dueDate;
 
             todoInfo.appendChild(checkbox);
             todoTitleAndDate.appendChild(todoTitle);
@@ -102,7 +99,7 @@ const domManager = (() => {
             
             todoItem.appendChild(todoInfo);
             //append row of buttons
-            const type = 'todoList';
+            const type = 'todoGeneral';
             todoItem.appendChild(addBtnsTodo(type, index));
             todoList.appendChild(todoItem);
         })
@@ -112,7 +109,6 @@ const domManager = (() => {
     //Adding row of buttons to a todo-listing (select/exit, edit and delete )
     const addBtnsTodo = (type, index) => {
         const todoButtons = document.createElement('div');
-        todoButtons.classList.add('btnRow');
         const myDeleteIcon = new Image();
         myDeleteIcon.src = deleteIcon;
         myDeleteIcon.setAttribute('id','content_icon');
@@ -121,14 +117,14 @@ const domManager = (() => {
         myEditIcon.src = editIcon;
         myEditIcon.classList.add('modalBtn', 'modal-open');
         myEditIcon.setAttribute('data-id', 'todo-modal');
-        myEditIcon.setAttribute('id', 'editTodoBtn');
+        myEditIcon.setAttribute('id', 'content_icon');
 
         const mySelectIcon = new Image();
         mySelectIcon.src = selectIcon;
         mySelectIcon.setAttribute('id', 'content_icon');
 
         const exitButton = document.createElement('button');
-        exitButton.textContent = 'x';
+        exitButton.textContent = 'X';
         exitButton.setAttribute('id','details-close');
 
         myDeleteIcon.addEventListener('click', (e) => {
@@ -139,10 +135,10 @@ const domManager = (() => {
             }
         });
 
-        myEditIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            handleEditTodo(index);
-        })
+        // myEditIcon.addEventListener('click', (e) => {
+        //     e.stopPropagation();
+        //     editTodo(index);
+        // })
 
         mySelectIcon.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -171,35 +167,23 @@ const domManager = (() => {
     
     const renderTodoDetails = (todo) => {
         todoList.innerHTML = '';
-        const currentTodo = storageManager.getCurrentProject().todos[todo]; 
+        const currentTodo = storageManager.getCurrentProject().todos[todo];
         const todoItem = document.createElement('div');
         todoItem.classList.add('todoItem', 'todoDetails');
         todoItem.style.backgroundColor = priorityColorCoding(currentTodo.priority);
-        
-        const todoText = document.createElement('div');
-        todoText.classList.add('detailsText');
-        const todoTitle = document.createElement('h1');
+        const todoTitle = document.createElement('h3');
         todoTitle.textContent = currentTodo.title;
-        const todoDuedate =  document.createElement('h3');
-        todoDuedate.textContent = 'Due date: ' + format(currentTodo.dueDate, 'dd/MM/yyyy');
-        const result = formatDistanceToNow(new Date(currentTodo.dueDate));
-        const todoDaysLeft = document.createElement('h3');
-        todoDaysLeft.textContent = result + ' to go!';
-        todoDaysLeft.style.color = 'red';
-        const todoPriority = document.createElement('h3');
+        const todoDuedate =  document.createElement('h5');
+        todoDuedate.textContent = 'Due date: ' + currentTodo.dueDate;
+        const todoPriority = document.createElement('h5');
         todoPriority.textContent = 'Priority: ' + currentTodo.priority;
-        const todoNotesHeading = document.createElement('h3');
-        todoNotesHeading.textContent = 'Notes: ';
         const todoNotes = document.createElement('p');
-        todoNotes.textContent = currentTodo.notes;
+        todoNotes.textContent = 'Notes: ' + currentTodo.notes;
 
-        todoText.appendChild(todoTitle);
-        todoText.appendChild(todoDuedate);
-        todoText.appendChild(todoDaysLeft);
-        todoText.appendChild(todoPriority);
-        todoText.appendChild(todoNotesHeading);
-        todoText.appendChild(todoNotes);
-        todoItem.appendChild(todoText);
+        todoItem.appendChild(todoTitle);
+        todoItem.appendChild(todoDuedate);
+        todoItem.appendChild(todoPriority);
+        todoItem.appendChild(todoNotes);
         //append row of buttons
         const type = 'todoDetails';
         todoItem.appendChild(addBtnsTodo(type, todo));
@@ -211,7 +195,6 @@ const domManager = (() => {
         return currentTodo.priority;
     }
 
-    //Method to color background of todoitem according to prioritylevel
     const priorityColorCoding = (value) => {
         switch (value) {
             case 'low':

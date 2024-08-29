@@ -46,9 +46,9 @@ const storageManager = (()=> {
         if (!projects.length) {
             const defaultProject = new Project('Tasks', 'default-start');
             projects.push(defaultProject);
-            const defaultTodo = new Todo('Finish Todo-app', '2024-08-29');
+            const defaultTodo = new Todo('Finish Todo-app', '23-09-2024');
             defaultProject.addTodo(defaultTodo);
-            const newTodo = new Todo('Walk the dog', '2024-08-30');
+            const newTodo = new Todo('Walk the dog', '23-08-2024');
             defaultProject.addTodo(newTodo);
             currentProject = defaultProject;
             };
