@@ -186,6 +186,7 @@
     font-weight: bold; 
     font-size: 30px;
     padding: 0 5px;
+    cursor: pointer;
 }
 
 .completed-todo {
