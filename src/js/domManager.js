@@ -106,7 +106,6 @@ const domManager = (() => {
         }
     }
 
-    //Adding row of buttons to a todo-listing (select/exit, edit and delete )
     const addBtnsTodo = (type, index) => {
         const todoButtons = document.createElement('div');
         const myDeleteIcon = new Image();
