@@ -4,8 +4,8 @@ import domManager from './js/domManager';
 import storageManager from './js/localStorage';
 
 //Initial render
-domManager.renderProjects(storageManager.getProjects());
-domManager.renderTodos(storageManager.getTodosInCurrentProject());
+domManager.renderProjects();
+domManager.renderTodos();
 
 //modal to create/edit projects and todos 
 let ModalBtns = document.querySelectorAll('.modalBtn');
@@ -52,7 +52,7 @@ function newProjectFromFormInput (event) {
     let todos = data.get("todos");
 
     storageManager.addProject(name, description, todos);
-    domManager.renderProjects(storageManager.getProjects());
+    domManager.renderProjects();
     formElem.reset();
 };
 
@@ -68,7 +68,7 @@ function newTodoFromFormInput (event) {
   let notes = todoData.get("notes");
 
   storageManager.addTodoToProject(title, dueDate, priority, notes);
-  domManager.renderTodos(storageManager.getTodosInCurrentProject());
+  domManager.renderTodos();
   formElemTodo.reset();
 };
 

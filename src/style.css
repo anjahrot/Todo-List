@@ -143,6 +143,7 @@
     width: 30px;
     height: auto;
     padding: 0 5px;
+    cursor: pointer;
     /* filter: invert(1); */
 }
 
@@ -174,6 +175,7 @@
     font-weight: bold;
     font-size: 26px;
     padding: 0 5px;
+    cursor: pointer;
 }
 
 .completed-todo {
