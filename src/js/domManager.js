@@ -39,10 +39,11 @@ const domManager = (() => {
 
             myDeleteIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (index === 0) {
-                    alert('Can not delete default project');
-                }
-                else if (confirm('Are you sure you want to delete this project?')){   
+                // if (index === 0) {
+                //     alert('Can not delete default project');
+                // }
+                //else 
+                if (confirm('Are you sure you want to delete this project?')){   
                     if (currentProjectHeading.textContent === storageManager.getProjects()[index].name) {
                         storageManager.setCurrentProject('Tasks');  //Set to default project if current is deleted
                     }
@@ -138,6 +139,11 @@ const domManager = (() => {
             }
         });
 
+        myEditIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleEditTodo(index);
+        })
+
         mySelectIcon.addEventListener('click', (e) => {
             e.stopPropagation();
             renderTodoDetails(index);
@@ -216,8 +222,126 @@ const domManager = (() => {
                 return '#f8d7da';
         }
     }
+
+    const handleEditTodo = (todo) => {
+        const modal = document.querySelector('#todo-modal');
+        const submitter = modal.querySelector('.submitTodo');
+        submitter.setAttribute('id', 'todo-update-button');
+        setTodoFormInputs(todo);
+    }
+
+    const setTodoFormInputs = (todo) => {
+        const currentTodo = storageManager.getCurrentProject().todos[todo];
+        const nameInput = document.querySelector('#title');
+        const dueDateInput = document.querySelector('#dueDate');
+        const priorityInput = document.querySelector('.priorityBoxes');
+        const notesInput = document.querySelector('#notes');
+        
+        nameInput.value = currentTodo.title;
+        dueDateInput.value = currentTodo.dueDate;
+        priorityInput.value = currentTodo.priority;
+        notesInput.value = currentTodo.notes;
+    } 
+
+//modal to create/edit projects and todos 
+const createEventlistenersForModals = () => {
+    let ModalBtns = document.querySelectorAll('.modalBtn');
+    console.log('Modalbuttons', ModalBtns);
+    let modal;
+    ModalBtns.forEach( item => item.addEventListener('click', (e) => {
+        if (e.currentTarget.classList.contains('modal-open')) {
+            modal = document.getElementById(e.currentTarget.dataset.id);
+            const submitter = modal.querySelector('.submitBtn');
+            if(e.currentTarget.id === 'addTodoBtn'){
+                submitter.id = 'todo-create-button';
+            }
+            handleOpenModal(modal);
+            //openModal(modal);
+        } else if (e.currentTarget.classList.contains("modal-close")) {
+            closeModal(modal);
+        } else {
+            return;    
+    }
+    }));
+}
+
+const handleOpenModal = (modal) => {
+  const todoDialogTitle = document.querySelector('.todoDialogTitle');
+  const submitter = modal.querySelector('.submitBtn');
+  console.log(submitter.id);
+  if(submitter){
+    if(submitter.id === 'todo-create-button'){
+      submitter.textContent = "Add todo";
+      todoDialogTitle.textContent = "Add todo";
+    }
+    else if(submitter.id === 'todo-update-button'){
+      submitter.textContent = "Update todo";
+      todoDialogTitle.textContent = "Edit todo";
+    }
+    else if(submitter.id === 'add-project-button'){
+       submitter.textContent = "Add project";
+    }
+  }
+  openModal(modal);
+  //Changing back to add, eventlistener on edit button changes back to to-do-update
+  submitter.removeAttribute('id', 'todo-create-button');
+}
+
+const openModal = (modal) => {
+    document.body.style.overflow = "hidden";
+    modal.setAttribute("open", "true");
+    let overlay = document.createElement("div");
+    overlay.id = "modal-overlay";
+    document.body.appendChild(overlay);
+  };
+
+const closeModal = (modal) => {
+    document.body.style.overflow = "auto";
+    modal.removeAttribute("open");
+    console.log(document.querySelector('#modal-overlay'));
+    document.body.removeChild(document.querySelector("#modal-overlay"));
+  };
+
+const submitProject = document.querySelector('.submitProject');
+const submitTodo = document.querySelector('.submitTodo');
+
+
+submitProject.addEventListener('click', newProjectFromFormInput);
+submitTodo.addEventListener('click', newTodoFromFormInput);
+
+const formElem = document.querySelector('#projectForm');
+
+function newProjectFromFormInput (event) {
+    event.preventDefault();
+
+    const data = new FormData(formElem);
+    let name = data.get("project_name");
+    let description = data.get("project_description");
+    let todos = data.get("todos");
+
+    storageManager.addProject(name, description, todos);
+    renderProjects();
+    formElem.reset();
+};
+
+const formElemTodo = document.querySelector('#todoForm');
+
+function newTodoFromFormInput (event) {
+  event.preventDefault();
+
+  const todoData = new FormData(formElemTodo);
+  let title = todoData.get("todo_title");
+  let dueDate = todoData.get("dueDate");
+  let priority = todoData.get("prio"); 
+  let notes = todoData.get("notes");
+
+  storageManager.addTodoToProject(title, dueDate, priority, notes);
+  renderTodos();
+  createEventlistenersForModals();
+  formElemTodo.reset();
+};
     
-    return {renderProjects, renderTodos, addBtnsTodo, renderTodoDetails, getTodoPriority, priorityColorCoding};
+    return {renderProjects, renderTodos, addBtnsTodo, renderTodoDetails, getTodoPriority, priorityColorCoding, createEventlistenersForModals};
 })();
 
 export default domManager;
