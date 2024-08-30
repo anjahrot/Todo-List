@@ -7,34 +7,27 @@ import storageManager from './js/localStorage';
 domManager.renderProjects();
 domManager.renderTodos();
 
-//modal to create/edit projects and todos 
+//modal to create projects and todos, eventlisteners to open and close dialog 
 let ModalBtns = document.querySelectorAll('.modalBtn');
 let modal;
 ModalBtns.forEach( item => item.addEventListener('click', (e) => {
-    if (e.currentTarget.classList.contains('modal-open')) {
-        modal = document.getElementById(e.currentTarget.dataset.id);
-        openModal(modal);
-    } else if (e.currentTarget.classList.contains("modal-close")) {
-        closeModal(modal);
+    modal = document.getElementById(e.currentTarget.dataset.id);
+    if (e.currentTarget.classList.contains('modal-open')) {      
+        if(modal.id === 'todo-modal'){
+          domManager.handleOpenModal(modal);
+        }
+        if(modal.id === 'project-modal'){
+          domManager.openModal(modal);
+        }
+    } else if (e.currentTarget.classList.contains('modal-close')) {
+        domManager.closeModal(modal);
     } else {
         return;    
     }
 }));
 
-const openModal = (modal) => {
-    document.body.style.overflow = "hidden";
-    modal.setAttribute("open", "true");
-    let overlay = document.createElement("div");
-    overlay.id = "modal-overlay";
-    document.body.appendChild(overlay);
-  };
 
-const closeModal = (modal) => {
-    document.body.style.overflow = "auto";
-    modal.removeAttribute("open");
-    document.body.removeChild(document.querySelector("#modal-overlay"));
-  };
-
+//Eventlisteners to add form input
 const submitProject = document.querySelector('.submitProject');
 const submitTodo = document.querySelector('.submitTodo');
 

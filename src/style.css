@@ -224,6 +224,10 @@
     display: flex;
 }
 
+.modal[close] {
+    display: none;
+}
+
 .modal-inner {
     background-color: var(--bg-color-text);
     border-radius: 0.5em;

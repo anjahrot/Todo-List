@@ -119,7 +119,7 @@ const domManager = (() => {
 
         const myEditIcon = new Image();
         myEditIcon.src = editIcon;
-        myEditIcon.classList.add('modalBtn', 'modal-open');
+        myEditIcon.classList.add('modal-open');
         myEditIcon.setAttribute('data-id', 'todo-modal');
         myEditIcon.setAttribute('id', 'editTodoBtn');
 
@@ -223,104 +223,63 @@ const domManager = (() => {
         }
     }
 
-    // const handleEditTodo = (todo) => {
-    //     const modal = document.querySelector('#todo-modal');
-    //     const submitter = modal.querySelector('.submitTodo');
-    //     submitter.setAttribute('id', 'todo-update-button');
-    //     setTodoFormInputs(todo);
-    // }
+    const handleEditTodo = (todo) => {
+        const modal = document.querySelector('#todo-modal');
+        const submitter = modal.querySelector('.submitTodo');
+        submitter.setAttribute('id', 'todo-update-button');
+        setTodoFormInputs(todo);
+        handleOpenModal(modal);
+    }
 
-    // const setTodoFormInputs = (todo) => {
-    //     const currentTodo = storageManager.getCurrentProject().todos[todo];
-    //     const nameInput = document.querySelector('#title');
-    //     const dueDateInput = document.querySelector('#dueDate');
-    //     const priorityInput = document.querySelector('.priorityBoxes');
-    //     const notesInput = document.querySelector('#notes');
+    const setTodoFormInputs = (todo) => {
+        const currentTodo = storageManager.getCurrentProject().todos[todo];
+        const nameInput = document.querySelector('#title');
+        const dueDateInput = document.querySelector('#dueDate');
+        const priorityInput = document.querySelector('.priorityBoxes');
+        const notesInput = document.querySelector('#notes');
         
-    //     nameInput.value = currentTodo.title;
-    //     dueDateInput.value = currentTodo.dueDate;
-    //     priorityInput.value = currentTodo.priority;
-    //     notesInput.value = currentTodo.notes;
-    // } 
+        nameInput.value = currentTodo.title;
+        dueDateInput.value = currentTodo.dueDate;
+        priorityInput.value = currentTodo.priority;
+        notesInput.value = currentTodo.notes;
+    } 
 
 
-// const handleOpenModal = (modal) => {
-//   const todoDialogTitle = document.querySelector('.todoDialogTitle');
-//   const submitter = modal.querySelector('.submitBtn');
-//   console.log(submitter.id);
-//   if(submitter){
-//     if(submitter.id === 'todo-create-button'){
-//       submitter.textContent = "Add todo";
-//       todoDialogTitle.textContent = "Add todo";
-//     }
-//     else if(submitter.id === 'todo-update-button'){
-//       submitter.textContent = "Update todo";
-//       todoDialogTitle.textContent = "Edit todo";
-//     }
-//     else if(submitter.id === 'add-project-button'){
-//        submitter.textContent = "Add project";
-//     }
-//   }
-//   openModal(modal);
-//   //Changing back to add, eventlistener on edit button changes back to to-do-update
-//   submitter.removeAttribute('id', 'todo-create-button');
-// }
+const handleOpenModal = (modal) => {
+  const todoDialogTitle = document.querySelector('.todoDialogTitle');
+  const submitter = modal.querySelector('.submitTodo');
+  if(submitter){
+    if(submitter.id === 'todo-create-button'){
+      submitter.textContent = "Add todo";
+      todoDialogTitle.textContent = "Add todo";
+    }
+    else if(submitter.id === 'todo-update-button'){
+      submitter.textContent = "Update todo";
+      todoDialogTitle.textContent = "Edit todo";
+    }
+  }
+  openModal(modal);
+  //Changing id on submitter button back to todo-create, waiting for next button-click (changes back to update when editbtn clicked)
+  submitter.id = 'todo-create-button';
+}
 
-// const openModal = (modal) => {
-//     document.body.style.overflow = "hidden";
-//     modal.setAttribute("open", "true");
-//     let overlay = document.createElement("div");
-//     overlay.id = "modal-overlay";
-//     document.body.appendChild(overlay);
-//   };
+const openModal = (modal) => {
+    document.body.style.overflow = "hidden";
+    modal.setAttribute("open", "true");
+    let overlay = document.createElement("div");
+    overlay.id = "modal-overlay";
+    document.body.appendChild(overlay);
+  };
 
-// const closeModal = (modal) => {
-//     document.body.style.overflow = "auto";
-//     modal.removeAttribute("open");
-//     console.log(document.querySelector('#modal-overlay'));
-//     document.body.removeChild(document.querySelector("#modal-overlay"));
-//   };
-
-// const submitProject = document.querySelector('.submitProject');
-// const submitTodo = document.querySelector('.submitTodo');
+const closeModal = (modal) => {
+    document.body.style.overflow = "auto";
+    modal.removeAttribute("open");
+    document.body.removeChild(document.querySelector('#modal-overlay'));
+  };
 
 
-// submitProject.addEventListener('click', newProjectFromFormInput);
-// submitTodo.addEventListener('click', newTodoFromFormInput);
-
-// const formElem = document.querySelector('#projectForm');
-
-// function newProjectFromFormInput (event) {
-//     event.preventDefault();
-
-//     const data = new FormData(formElem);
-//     let name = data.get("project_name");
-//     let description = data.get("project_description");
-//     let todos = data.get("todos");
-
-//     storageManager.addProject(name, description, todos);
-//     renderProjects();
-//     formElem.reset();
-// };
-
-// const formElemTodo = document.querySelector('#todoForm');
-
-// function newTodoFromFormInput (event) {
-//   event.preventDefault();
-
-//   const todoData = new FormData(formElemTodo);
-//   let title = todoData.get("todo_title");
-//   let dueDate = todoData.get("dueDate");
-//   let priority = todoData.get("prio"); 
-//   let notes = todoData.get("notes");
-
-//   storageManager.addTodoToProject(title, dueDate, priority, notes);
-//   renderTodos();
-//   createEventlistenersForModals();
-//   formElemTodo.reset();
-// };
     
-    return {renderProjects, renderTodos, addBtnsTodo, renderTodoDetails, getTodoPriority, priorityColorCoding};
+    return {renderProjects, renderTodos, renderTodoDetails, handleOpenModal, openModal, closeModal};
 })();
 
 export default domManager;
