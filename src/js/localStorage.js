@@ -73,6 +73,14 @@ const storageManager = (()=> {
         currentProject.addTodo(newTodo);
     }
 
+    const editTodoInProject = (title, dueDate, priority, notes) => {
+        const newData = new Todo(title, dueDate, priority, notes);
+        //Må finne indexen på eit vis...
+        const index = 0;
+        const currentProject = getCurrentProject();
+        currentProject.updateTodo(index, newData);
+    }
+
     const removeProject = (index) => {
         projects.splice(index,1);
         saveToLocalStorage();
@@ -123,6 +131,7 @@ const storageManager = (()=> {
         saveToLocalStorage,
         loadFromLocalStorage,
         addTodoToProject,
+        editTodoInProject,
         removeTodo,
         toggleCompleted
     }

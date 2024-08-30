@@ -76,6 +76,7 @@ const domManager = (() => {
             checkbox.type = 'checkbox';
             checkbox.checked = item.completed;
             checkbox.classList.add('todo-checkbox');
+            checkbox.setAttribute('name','todo-checkbox');
 
             checkbox.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -235,14 +236,24 @@ const domManager = (() => {
         const currentTodo = storageManager.getCurrentProject().todos[todo];
         const nameInput = document.querySelector('#title');
         const dueDateInput = document.querySelector('#dueDate');
-        const priorityInput = document.querySelector('.priorityBoxes');
         const notesInput = document.querySelector('#notes');
+
+        const todosPriValue = currentTodo.priority;
+        const radioButtons = document.querySelectorAll('input[name="prio"]');
+        radioButtons.forEach((radioBtn) => {
+            if(radioBtn.value === todosPriValue) {
+                radioBtn.checked = true;
+            }
+        });
         
         nameInput.value = currentTodo.title;
         dueDateInput.value = currentTodo.dueDate;
-        priorityInput.value = currentTodo.priority;
         notesInput.value = currentTodo.notes;
     } 
+
+    const updateTodo = () => {
+        
+    }
 
 
 const handleOpenModal = (modal) => {

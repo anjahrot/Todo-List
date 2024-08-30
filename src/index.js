@@ -14,6 +14,7 @@ ModalBtns.forEach( item => item.addEventListener('click', (e) => {
     modal = document.getElementById(e.currentTarget.dataset.id);
     if (e.currentTarget.classList.contains('modal-open')) {      
         if(modal.id === 'todo-modal'){
+          formElemTodo.reset();
           domManager.handleOpenModal(modal);
         }
         if(modal.id === 'project-modal'){
@@ -32,9 +33,10 @@ const submitProject = document.querySelector('.submitProject');
 const submitTodo = document.querySelector('.submitTodo');
 
 submitProject.addEventListener('click', newProjectFromFormInput);
-submitTodo.addEventListener('click', newTodoFromFormInput);
+submitTodo.addEventListener('click', handleSubmitTodo);
 
 const formElem = document.querySelector('#projectForm');
+// const formElem = document.querySelector('#projectForm');
 
 function newProjectFromFormInput (event) {
     event.preventDefault();
@@ -50,8 +52,9 @@ function newProjectFromFormInput (event) {
 };
 
 const formElemTodo = document.querySelector('#todoForm');
+const todoDialogTitle = document.querySelector('.todoDialogTitle');
 
-function newTodoFromFormInput (event) {
+function handleSubmitTodo (event) {
   event.preventDefault();
 
   const todoData = new FormData(formElemTodo);
@@ -60,7 +63,14 @@ function newTodoFromFormInput (event) {
   let priority = todoData.get("prio"); 
   let notes = todoData.get("notes");
 
-  storageManager.addTodoToProject(title, dueDate, priority, notes);
+  if(todoDialogTitle.textContent === 'Add todo'){
+    storageManager.addTodoToProject(title, dueDate, priority, notes);
+  }
+  else if(todoDialogTitle.textContent === 'Edit todo') {
+    storageManager.editTodoInProject(title, dueDate, priority, notes);
+  }
+
+  storageManager.saveToLocalStorage();
   domManager.renderTodos();
   formElemTodo.reset();
 };

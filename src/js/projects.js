@@ -9,6 +9,10 @@ export class Project {
         this.todos.push(todo);
     }
 
+    updateTodo(index, todo) {
+        this.todos[index] = todo;
+    }
+
     removeTodo(index) {
         this.todos.splice(index, 1);
     }
