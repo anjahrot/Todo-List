@@ -10,6 +10,8 @@ const domManager = (() => {
     const projectList = document.querySelector('.projectList');
     const currentProjectHeading = document.querySelector('.currentProjectName');
     const todoList = document.querySelector('.todosInCurrentProject');
+    //Variable to keep track of index of the todo that is currently chosen for editing
+    let currentEditTodoIndex = 0;
 
     const renderProjects = () => {
         projectList.innerHTML = '';
@@ -21,7 +23,8 @@ const domManager = (() => {
             const btn = document.createElement('button');
             btn.textContent = project.name;
             btn.classList.add('sidebar', 'projectItems');
-            
+
+            const itemIcons = document.createElement('div');
             const myEditIcon = new Image();
             myEditIcon.src = editIcon;
             myEditIcon.setAttribute('id','sidebarIcon');
@@ -52,8 +55,9 @@ const domManager = (() => {
                 }
             });
 
-            btn.appendChild(myEditIcon);
-            btn.appendChild(myDeleteIcon);
+            itemIcons.appendChild(myEditIcon);
+            itemIcons.appendChild(myDeleteIcon);
+            btn.appendChild(itemIcons);
             projectItem.appendChild(btn);
             projectList.appendChild(projectItem);
         })
@@ -142,7 +146,8 @@ const domManager = (() => {
 
         myEditIcon.addEventListener('click', (e) => {
             e.stopPropagation();
-            handleEditTodo(index);
+            setCurrentEditTodoIndex(index);
+            handleEditTodoDialog(index);
         })
 
         mySelectIcon.addEventListener('click', (e) => {
@@ -224,7 +229,7 @@ const domManager = (() => {
         }
     }
 
-    const handleEditTodo = (todo) => {
+    const handleEditTodoDialog = (todo) => {
         const modal = document.querySelector('#todo-modal');
         const submitter = modal.querySelector('.submitTodo');
         submitter.setAttribute('id', 'todo-update-button');
@@ -251,8 +256,13 @@ const domManager = (() => {
         notesInput.value = currentTodo.notes;
     } 
 
-    const updateTodo = () => {
-        
+    //Methods to set and get currentEditTodo index
+    const setCurrentEditTodoIndex = (index) => {
+        currentEditTodoIndex = index;
+    }
+
+    const getCurrentEditTodoIndex = () => {
+        return currentEditTodoIndex;
     }
 
 
@@ -290,7 +300,7 @@ const closeModal = (modal) => {
 
 
     
-    return {renderProjects, renderTodos, renderTodoDetails, handleOpenModal, openModal, closeModal};
+    return {renderProjects, renderTodos, renderTodoDetails, handleOpenModal, getCurrentEditTodoIndex, openModal, closeModal};
 })();
 
 export default domManager;

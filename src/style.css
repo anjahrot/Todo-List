@@ -71,10 +71,11 @@
 
 .sidebar .projectItems {
     border: 1px solid var(--bg-color-text);
-    padding: 5px 15px;
+    padding: 5px 10px;
+    width: 200px;
     border-radius: 10px;
     display: flex;
-    gap: 5px;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -86,7 +87,7 @@
 
 #sidebarIcon {
     filter: invert(1);
-    width: 20px;
+    width: 25px;
     height: auto;
 }
 
@@ -100,7 +101,7 @@
 }
 
 .sidebar li:first-of-type {
-    padding-top: 15px;
+    padding-top: 20px;
 }
 
 /* main content - elements added dynamically in javascript*/
@@ -224,10 +225,6 @@
     display: flex;
 }
 
-.modal[close] {
-    display: none;
-}
-
 .modal-inner {
     background-color: var(--bg-color-text);
     border-radius: 0.5em;
@@ -271,6 +268,7 @@
     padding-right: 10px;
 } 
 
+textarea,
 .modal form input {
     width: 300px;
     height: 20px;
@@ -285,6 +283,11 @@
 .priorityBoxes input[type=radio] {
     width: 30px;
     margin-bottom: 5px;
+}
+
+textarea {
+    height: 100px;
+    resize: none;
 }
   
 .submitTodo,

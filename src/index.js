@@ -67,7 +67,8 @@ function handleSubmitTodo (event) {
     storageManager.addTodoToProject(title, dueDate, priority, notes);
   }
   else if(todoDialogTitle.textContent === 'Edit todo') {
-    storageManager.editTodoInProject(title, dueDate, priority, notes);
+    const todoIndex = domManager.getCurrentEditTodoIndex();
+    storageManager.editTodoInProject(title, dueDate, priority, notes, todoIndex);
   }
 
   storageManager.saveToLocalStorage();

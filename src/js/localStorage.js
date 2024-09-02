@@ -73,10 +73,8 @@ const storageManager = (()=> {
         currentProject.addTodo(newTodo);
     }
 
-    const editTodoInProject = (title, dueDate, priority, notes) => {
+    const editTodoInProject = (title, dueDate, priority, notes, index) => {
         const newData = new Todo(title, dueDate, priority, notes);
-        //Må finne indexen på eit vis...
-        const index = 0;
         const currentProject = getCurrentProject();
         currentProject.updateTodo(index, newData);
     }
