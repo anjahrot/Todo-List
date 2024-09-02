@@ -83,12 +83,6 @@
     fill:rgb(224, 224, 224)
 }
 
-/* #plus_img_sidebar {
-    filter: invert(1);
-    width: 30px;
-    height: auto;
-} */
-
 #sidebarIcon {
     filter: invert(1);
     width: 25px;
@@ -142,14 +136,13 @@
     border-radius: 50%;
 }
 
+.content svg,
 #editTodoBtn,
-#content_icon,
-#plus_img_content {
+#content_icon {
     width: 30px;
     height: auto;
     padding: 0 5px;
     cursor: pointer;
-    /* filter: invert(1); */
 }
 
 /* Todo items*/
