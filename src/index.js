@@ -36,7 +36,6 @@ submitProject.addEventListener('click', newProjectFromFormInput);
 submitTodo.addEventListener('click', handleSubmitTodo);
 
 const formElem = document.querySelector('#projectForm');
-// const formElem = document.querySelector('#projectForm');
 
 function newProjectFromFormInput (event) {
     event.preventDefault();

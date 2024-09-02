@@ -178,7 +178,6 @@ const domManager = (() => {
     const renderTodoDetails = (todo) => {
         todoList.innerHTML = '';
         const currentTodo = storageManager.getCurrentProject().todos[todo]; 
-        console.log(currentTodo);
         const todoItem = document.createElement('div');
         todoItem.classList.add('todoItem', 'todoDetails');
         todoItem.style.backgroundColor = priorityColorCoding(currentTodo.priority);

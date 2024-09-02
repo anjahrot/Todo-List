@@ -15,7 +15,7 @@ export class Todo {
     }
 
     isInFuture () {
-        return isFuture(new Date(this.dueDate)); //Return true or false
+        return isFuture(new Date(this.dueDate)); //Returns true or false
     }
 };
 

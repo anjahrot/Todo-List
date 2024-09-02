@@ -79,11 +79,15 @@
     align-items: center;
 }
 
-#plus_img_sidebar {
+.sidebar svg {
+    fill:rgb(224, 224, 224)
+}
+
+/* #plus_img_sidebar {
     filter: invert(1);
     width: 30px;
     height: auto;
-}
+} */
 
 #sidebarIcon {
     filter: invert(1);
