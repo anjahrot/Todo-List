@@ -43,10 +43,10 @@ function newProjectFromFormInput (event) {
 
     const data = new FormData(formElem);
     let name = data.get("project_name");
-    let description = data.get("project_description");
+    // let description = data.get("project_description");
     let todos = data.get("todos");
 
-    storageManager.addProject(name, description, todos);
+    storageManager.addProject(name, todos);
     domManager.renderProjects();
     formElem.reset();
 };

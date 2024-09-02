@@ -1,9 +1,10 @@
 import storageManager from "./localStorage";
+import { Todo } from "./todos";
 import selectIcon from '../icons/select.svg';
 import deleteIcon from '../icons/trash-can.svg';
 import editIcon from '../icons/note-edit.svg';
 
-const {format, formatDistanceToNow} = require("date-fns");
+const {format} = require("date-fns");
 
 const domManager = (() => {
 
@@ -24,10 +25,10 @@ const domManager = (() => {
             btn.textContent = project.name;
             btn.classList.add('sidebar', 'projectItems');
 
-            const itemIcons = document.createElement('div');
-            const myEditIcon = new Image();
-            myEditIcon.src = editIcon;
-            myEditIcon.setAttribute('id','sidebarIcon');
+            // const itemIcons = document.createElement('div');
+            // const myEditIcon = new Image();
+            // myEditIcon.src = editIcon;
+            // myEditIcon.setAttribute('id','sidebarIcon');
 
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -42,11 +43,10 @@ const domManager = (() => {
 
             myDeleteIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // if (index === 0) {
-                //     alert('Can not delete default project');
-                // }
-                //else 
-                if (confirm('Are you sure you want to delete this project?')){   
+                if (index === 0) {
+                    alert('Can not delete default project');
+                }
+                else if (confirm('Are you sure you want to delete this project?')){   
                     if (currentProjectHeading.textContent === storageManager.getProjects()[index].name) {
                         storageManager.setCurrentProject('Tasks');  //Set to default project if current is deleted
                     }
@@ -55,9 +55,9 @@ const domManager = (() => {
                 }
             });
 
-            itemIcons.appendChild(myEditIcon);
-            itemIcons.appendChild(myDeleteIcon);
-            btn.appendChild(itemIcons);
+            // itemIcons.appendChild(myEditIcon);
+            btn.appendChild(myDeleteIcon);
+            // btn.appendChild(itemIcons);
             projectItem.appendChild(btn);
             projectList.appendChild(projectItem);
         })
@@ -178,6 +178,7 @@ const domManager = (() => {
     const renderTodoDetails = (todo) => {
         todoList.innerHTML = '';
         const currentTodo = storageManager.getCurrentProject().todos[todo]; 
+        console.log(currentTodo);
         const todoItem = document.createElement('div');
         todoItem.classList.add('todoItem', 'todoDetails');
         todoItem.style.backgroundColor = priorityColorCoding(currentTodo.priority);
@@ -188,9 +189,8 @@ const domManager = (() => {
         todoTitle.textContent = currentTodo.title;
         const todoDuedate =  document.createElement('h3');
         todoDuedate.textContent = 'Due date: ' + format(currentTodo.dueDate, 'dd/MM/yyyy');
-        const result = formatDistanceToNow(new Date(currentTodo.dueDate));
         const todoDaysLeft = document.createElement('h3');
-        todoDaysLeft.textContent = result + ' to go!';
+        todoDaysLeft.textContent = findDistanceToNow(todo);
         todoDaysLeft.style.color = 'red';
         const todoPriority = document.createElement('h3');
         todoPriority.textContent = 'Priority: ' + currentTodo.priority;
@@ -210,6 +210,20 @@ const domManager = (() => {
         const type = 'todoDetails';
         todoItem.appendChild(addBtnsTodo(type, todo));
         todoList.appendChild(todoItem); 
+    }
+
+    const findDistanceToNow = (todo) => {
+        let timeLeft;
+        const currentTodo = storageManager.getCurrentProject().todos[todo];
+        const thisTodo = new Todo(currentTodo.name, currentTodo.dueDate);
+        //If date in future
+        if(thisTodo.isInFuture()) {
+            timeLeft = 'Task is due in ' + thisTodo.getDistanceToNow(); 
+        }
+        else {
+            timeLeft = 'This task is overdue!'
+        }
+        return timeLeft;
     }
 
     const getTodoPriority = (todo) => {

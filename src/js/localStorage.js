@@ -9,7 +9,7 @@ const storageManager = (()=> {
     const saveToLocalStorage = () => {
         localStorage.setItem('projects', JSON.stringify(projects.map(project => ({
             name: project.name,
-            description: project.description,
+            // description: project.description,
             todos: project.todos
         }))));
         localStorage.setItem('currentProject', JSON.stringify(currentProject ? {name: currentProject.name } : null));
@@ -22,7 +22,7 @@ const storageManager = (()=> {
 
         if (storedProjects) {
             projects = JSON.parse(storedProjects).map(item => {
-                const project = new Project(item.name, item.description, item.todos);
+                const project = new Project(item.name, item.todos);
                 
                 return project;
                 });    
@@ -44,7 +44,7 @@ const storageManager = (()=> {
     
         //Add default project if empty
         if (!projects.length) {
-            const defaultProject = new Project('Tasks', 'default-start');
+            const defaultProject = new Project('Tasks');
             projects.push(defaultProject);
             const defaultTodo = new Todo('Finish Todo-app', '2024-08-29');
             defaultProject.addTodo(defaultTodo);
@@ -61,8 +61,8 @@ const storageManager = (()=> {
         return projects;
     }
 
-    const addProject = (name, description, todos) => {
-        const project = new Project(name, description, todos = []);
+    const addProject = (name, todos) => {
+        const project = new Project(name, todos = []);
         projects.push(project);
         saveToLocalStorage();
     }
